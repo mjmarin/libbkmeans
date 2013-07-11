@@ -27,6 +27,13 @@ Requirements:
 This software has been tested on MS Windows with MS Visual C++ 2010 Express and OpenCV 2.4.4
 
 --------------------------------------------------------------------------------
+Quick start:
+--------------------------------------------------------------------------------
+1. Compile with CMake
+2. Run test program:
+   clustercv data\plant.jpg 100
+
+--------------------------------------------------------------------------------
 Citation:
 --------------------------------------------------------------------------------
 If you use this library for your publications, please cite it as:
