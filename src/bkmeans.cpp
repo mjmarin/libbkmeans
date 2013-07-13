@@ -16,7 +16,7 @@ Bkmeans::~Bkmeans()
    _samples.clear();
 }
 
-void Bkmeans::setSamples(std::vector<Bsample> & samples)
+void Bkmeans::setSamples(const std::vector<Bsample> & samples)
 {
 	if (!_samples.empty())
 		_samples.clear();
@@ -27,7 +27,7 @@ void Bkmeans::setSamples(std::vector<Bsample> & samples)
 #if BKMEANS_WITH_OCV > 0
 /** Accept mat data
 */
-void Bkmeans::setSamples(cv::Mat & samplesMat)
+void Bkmeans::setSamples(const cv::Mat & samplesMat)
 {
    if (!_samples.empty())
       _samples.clear();
@@ -285,7 +285,7 @@ int Bkmeans::cluster(int K)
    return retcode;
 }
 
-std::vector<Bsample> Bkmeans::getCentroids(void)
+std::vector<Bsample> Bkmeans::getCentroids(void) const
 {
 	int N = _centroids.size();
    if (N == 0)
@@ -300,6 +300,36 @@ std::vector<Bsample> Bkmeans::getCentroids(void)
    for (int i = 0; i < N; i++)
    {
       centroids.push_back(_samples[_centroids[i]]);
+   }
+
+   return centroids;
+}
+
+cv::Mat Bkmeans::getCentroidsMat(void) const
+{
+	int N = _centroids.size();
+   if (N == 0)
+   {
+      cerr << "ERROR: empty centroids" << endl;
+      exit(-1);
+   }
+
+   int len = _samples[0].size();
+	cv::Mat centroids;
+   centroids.create(0,len, CV_8UC1);
+
+   for (int i = 0; i < N; i++)
+   {
+      //cv::Mat tmp(1,len, CV_8UC1);
+      cv::Mat tmp(_samples[_centroids[i]], false); // Data is not copied
+      /*
+      for (int j = 0; j < len; j++)
+      {
+         tmp.at<uchar>(1,j) = _samples[_centroids[i]][j];
+      }
+      */
+      //tmp = cv::Mat(_samples[_centroids[i]], false); // Data is not copied
+      centroids.push_back(tmp);
    }
 
    return centroids;

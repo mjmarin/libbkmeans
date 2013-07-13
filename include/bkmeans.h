@@ -4,11 +4,7 @@
 //--------------------------------------
 
 #include <custom.h>
-/*
-#ifndef BKMEANS_WITH_OCV 
-  #define BKMEANS_WITH_OCV 0
-#endif
-  */
+
 
 #ifndef _BKMEANS_H_
 #define _BKMEANS_H_ 1
@@ -45,17 +41,23 @@ class BKMEANS_EXPORT Bkmeans
 
       /** Set samples. This must be done before calling cluster()
       */
-      void setSamples(std::vector<Bsample> & samples);
+      void setSamples(const std::vector<Bsample> & samples);
 
       #if BKMEANS_WITH_OCV > 0
       /** Accept mat data
       */
-      void setSamples(cv::Mat & samplesMat);
+      void setSamples(const cv::Mat & samplesMat);
       #endif
 
 	  /** Returns a copy of the centroids
 	  */
-      std::vector<Bsample> getCentroids(void);
+      std::vector<Bsample> getCentroids(void) const;
+
+      #if BKMEANS_WITH_OCV > 0
+      /** Accept mat data
+      */
+      cv::Mat getCentroidsMat(void) const;
+      #endif
 
       unsigned long int getEnergy(void){return _energy;};
 

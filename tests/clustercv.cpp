@@ -8,6 +8,7 @@
 #include <ctime>
 
 #include <bkmeans.h>
+#include <bbowtrainer.h>
 
 using namespace std;
 
@@ -94,6 +95,12 @@ int main(int argc, char ** argv)
    cout << "(" << res << ")" << endl;
 
    cout << "Final energy: " << bkm.getEnergy() << endl;
+
+   /* Alternative */
+   cout << "* Starting clustering with BBOWTrainer class " << endl;
+   BBOWTrainer bbt(K);
+   
+   bbt.cluster(descriptors);   
 
 	return 0;
 }
